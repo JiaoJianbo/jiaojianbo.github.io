@@ -1,17 +1,17 @@
 # Site settings
 title: Bobby's Blog
-description: Bobby's Blog.
+description: Welcome to Bobby's Blog.
 cover: assets/images/cover.jpg
 #logo: assets/images/logo.png
 #favicon: assets/images/favicon.png
-baseurl: "/" # the subpath of your site, e.g. /blog/ or / for root
-url: "https://jiaojianbo.github.io" # the base hostname & protocol for your site
-paginate:	5 # The number of posts to show per page on your homepage
+baseurl: "/"                            # The subpath of your site, e.g. /blog/ or / for root
+url: "https://jiaojianbo.github.io"     # The base hostname & protocol for your site
+paginate: 5                             # The number of posts to show per page on your homepage
 
 # Social
 facebook: facebook
 twitter: twitter
-github:  github
+github: github
 
 #Additional Pages
 about: about
@@ -37,13 +37,13 @@ plugins:
 # Settings for rake task
 safe: False
 lsi: False
-username: jiaojianbo #github username
-repo: jiaojianbo.github.io #github repository
-branch: master #branch
-#relative_source: ../hanuman/ #source directory
-#destination: ../hanuman-pages/ #destination directory
-#production_url:  https://samanyougarg.com/
-#source_url:  https://github.com/samanyougarg/hanuman #source repository url
+username: jiaojianbo        #github username
+repo: jiaojianbo.github.io  #github repository
+branch: master              #branch
+#relative_source: ../hanuman/       #source directory
+#destination: ../hanuman-pages/     #destination directory
+#production_url: https://samanyougarg.com/
+#source_url: https://github.com/samanyougarg/hanuman #source repository url
 
 exclude:
   - README.md
