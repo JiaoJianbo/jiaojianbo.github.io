@@ -4,7 +4,7 @@ description: Welcome to Bobby's Blog.
 cover: assets/images/cover.jpg
 #logo: assets/images/logo.png
 #favicon: assets/images/favicon.png
-baseurl: "//"                            # The subpath of your site, e.g. /blog/ or / for root
+baseurl: "/"                            # The subpath of your site, e.g. /blog/ or / for root
 url: "https://jiaojianbo.github.io"     # The base hostname & protocol for your site
 paginate: 5                             # The number of posts to show per page on your homepage
 
