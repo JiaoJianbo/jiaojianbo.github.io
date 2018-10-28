@@ -1,4 +1,4 @@
-# Site settings
+### Site settings
 title: Bobby's Blog
 description: Welcome to Bobby's Blog.
 cover: assets/images/cover.jpg
@@ -8,12 +8,12 @@ baseurl: "/"                            # The subpath of your site, e.g. /blog/ 
 url: "https://jiaojianbo.github.io"     # The base hostname & protocol for your site
 paginate: 5                             # The number of posts to show per page on your homepage
 
-# Social
-facebook: facebook
-twitter: twitter
-github: github
+### Social
+#facebook: facebook
+#twitter: twitter
+github: jiaojianbo
 
-#Additional Pages
+### Additional Pages
 about: about
 contact: contact
 privacy-policy: privacy-policy
@@ -21,10 +21,10 @@ privacy-policy: privacy-policy
 permalink: /:title
 
 
-# Google Analytics
+### Google Analytics
 analytics_id: ""
 
-# Build settings
+### Build settings
 markdown: kramdown
 
 kramdown:
@@ -34,7 +34,7 @@ plugins:
   - jekyll-paginate
 
 
-# Settings for rake task
+### Settings for rake task
 safe: False
 lsi: False
 username: jiaojianbo        #github username

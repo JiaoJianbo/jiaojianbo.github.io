@@ -1,12 +1,11 @@
 <!-- Start Navbar -->
-  <header class="ampstart-headerbar fixed flex justify-start items-center top-0 left-0 right-0 pl2 pr4 ">
-    <div role="button" aria-label="open sidebar" on="tap:header-sidebar.toggle" tabindex="0" class="ampstart-navbar-trigger  pr2  ">☰
-    </div>
-    {% if site.logo %}
-    <a class="my0 mx-auto" href="{{site.baseurl}}"><amp-img src="{{site.baseurl}}{{site.logo}}" width="110" height="33" layout="fixed" class="my0 mx-auto" alt="Logo"></amp-img></a>
-    {% endif %}
-  </header>
-
+<header class="ampstart-headerbar fixed flex justify-start items-center top-0 left-0 right-0 pl2 pr4 ">
+<div role="button" aria-label="open sidebar" on="tap:header-sidebar.toggle" tabindex="0" class="ampstart-navbar-trigger  pr2  ">☰
+</div>
+{% if site.logo %}
+	<a class="my0 mx-auto" href="{{site.baseurl}}"><amp-img src="{{site.baseurl}}{{site.logo}}" width="110" height="33" layout="fixed" class="my0 mx-auto" alt="Logo"></amp-img></a>
+{% endif %}
+</header>
 
 <!-- Start Sidebar -->
 <amp-sidebar id="header-sidebar" class="ampstart-sidebar px3" layout="nodisplay">
@@ -28,7 +27,7 @@
     </ul>
   </nav>
 
-
+  <!-- Social -->
   <ul class="ampstart-social-follow list-reset flex justify-around items-center flex-wrap m0 mb4">
     {% if site.twitter %}
     <li>
@@ -47,6 +46,7 @@
     {% endif %}
   </ul>
 
+  <!-- Additional Pages -->
   <ul class="ampstart-sidebar-faq list-reset m0">
   {% if site.contact %}
     <li class="ampstart-faq-item"><a href="{{ site.baseurl }}{{ site.contact }}" class="text-decoration-none">Contact</a></li>
