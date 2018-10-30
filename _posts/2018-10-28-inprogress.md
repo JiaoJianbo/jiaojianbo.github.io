@@ -1,10 +1,17 @@
 ---
 layout: post
-cover: 'assets/images/tree.jpg'
-title: Inprogress
-date: 2018-10-28 20:00:00
+title: "正在建设中 ..."
+date: 2018-10-28 23:23:23 +0800
+categories: jekyll
 tags: test
-author: bobby
+author: Bobby
 ---
 
-<h3 id="heading3">正在建设中...</h3>
+* content
+{:toc}
+
+## 正在建设中 ...
+
+**新的Theme横空出世**
+
+<img src="/assets/images/tree.jpg" width="683" height="366" alt="Welcome" />

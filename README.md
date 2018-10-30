@@ -13,6 +13,11 @@ gem install github-pages
 ## 致谢（Thanks）
 The theme is based on [HANUMAN Jekyll Theme](https://github.com/samanyougarg/hanuman) jekyll theme. Thank You.
 
+...
+
+开始选用上面的主题样式，后来发现引入的东西太多，有些过于复杂了。最终选用了这个主题[HyG](https://gaohaoyang.github.io/)。上手容易，简洁明了，又不失易用性。
+
+
 搭建这个博客的时候参考了以下教程，也一并感谢！
  - [方志朋的博客](https://www.fangzhipeng.com/)
  - [在GitHub上创建和托管个人网站(上)](https://blog.csdn.net/qq_26927285/article/details/78761814)
