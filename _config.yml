@@ -9,7 +9,7 @@
 title: Bobby's Blog
 brief-intro: Hello World
 greeting: Welcome to Bobby's Blog!
-description: Welcome! 此博客源码请访问: https://github.com/JiaoJianbo/jiaojianbo.github.io
+description: 'Welcome! 此博客源码请访问: https://github.com/JiaoJianbo/jiaojianbo.github.io'
 baseurl: ""                             # the subpath of your site, e.g. /blog
 url: "https://jiaojianbo.github.io"     # the base hostname & protocol for your site
 
