@@ -62,6 +62,6 @@ author: Bobby
 
 多人合作时，每次要push时，注意先 pull 再 merge 再push
 
-`git merge dev` 将dev分支合并到当前分支，或者在dev分支上执行 `git rebase <target-branch>` 也会将dev分支合并到目标分支上，如果有冲突，解决完冲突，再执行 `git rebase --continue`。**注意：两个merge和rebase执行的时候，所在当前分支的区别。还有，一定不要对一个提交到公共仓库的分支做rebase操作。**
+`git merge dev` 将dev分支合并到当前分支，或者在dev分支上执行 `git rebase <target-branch>` 也会将dev分支合并到目标分支上，如果有冲突，解决完冲突，再执行 `git rebase --continue`。**注意：两个merge和rebase执行的时候，所在当前分支的区别。还有，一定不要对一个公共的分支做rebase操作** rebase操作可以把本地未push的分叉提交历史整理成直线。
 
 舍弃rebase `git rebase --abort`
