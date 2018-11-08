@@ -24,13 +24,11 @@ author: Bobby
 
 将所有改动加入暂存区 `git add .`，执行前一定先使用 `git status` 查看一下。
 
-从暂存区恢复到工作区 `git reset HEAD <filename>`，所有的改动还在。
+**从暂存区恢复到工作区** `git reset HEAD <filename>`，对文件做的最新的所有改动都还在（包括已加入到暂存区的和加入暂存区后在工作区新做的修改）。
 
-还原**工作区**中的某个文件改动 `git reset HEAD <filename>`，从暂存区放回到工作区
+**撤销工作区的改动** `git checkout -- <filename>` 注意`--`后面有空格。其实就是让这个文件回到最近一次`git commit` 或者 `git add`时的状态，无论工作区是修改还是删除。但是前提是该文件曾经被`add`过或者`commit`过，一个未曾加入过版本控制的新文件则不起作用。
 
-`git checkout -- <filename>` 注意`--`后面有空格，丢弃工作区的改动。其实就是让这个文件回到最近一次`git commit` 或 `git add`时的状态，无论工作区是修改还是删除。
-
-还原**工作区**中所有文件的改动 `git reset --hard HEAD`
+**撤销工作区和暂存区**中**所有文件**的改动 `git reset --hard HEAD`, 即将HEAD指到最近的一次commit。**注意**：那些已加入到暂存区还没有提交的改动也会被撤销，当然对未曾加入过版本控制的新文件则不影响。如果误操作了，不想撤销暂存区的改动，那么去搜索一下`git fsck --lost-found`的具体用法。
 
 查看所有的commit记录 `git log` 或者 `git log --pretty=oneline`，还有 `git log --graph --pretty=oneline --abbrev-commit`
 
