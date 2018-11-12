@@ -22,10 +22,12 @@ author: Bobby
 
 如果Spring Security在Classpath下，那么web应用程序的所有HTTP endpoints默认就会由'Basic'的授权进行保护。通过添加`@EnableGlobalMethodSecurity`注解，你可以给方法级别添加安全控制。详情请参考[Spring Security Reference](https://docs.spring.io/spring-security/site/docs/4.2.9.RELEASE/reference/htmlsingle/#jc-method).
 
-默认的`AuthenticationManager`有一个用户（用户名为'user'，密码是随机的，程序启动时可通过控制台INFO级别的log打印出来）。类似于：  
-```
+默认的`AuthenticationManager`有一个用户（用户名为'user'，密码是随机的，程序启动时可通过控制台INFO级别的log打印出来）。类似于：
+
+```log
 Using default security password: 78fa095d-3f4c-48b1-ad50-e24c31d5cf35
 ```
+
 **注意:** 如果你调整过日志配置，那么请确保org.springframework.boot.autoconfigure.security的log级别是INFO，否则不能看到输出的密码。
 
 当然你也可以通过配置`security.user.password`项，来修改默认密码。还有一些其他有用的属性都通过[SecurityProperties](https://github.com/spring-projects/spring-boot/blob/v1.5.17.RELEASE/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/security/SecurityProperties.java)具体化了（属性前缀为"security"）。
@@ -35,7 +37,8 @@ Using default security password: 78fa095d-3f4c-48b1-ad50-e24c31d5cf35
 
 同样，你也可以通过添加一个`AuthenticationManager`类型的bean，来关闭authentication manager 的配置。或者通过在`@Configuration`类中的一个方法中织入`AuthenticationManagerBuilder`来配置一个全局的`AuthenticationManager`。有一些安全的应用程序在[Spring Boot samples](https://github.com/spring-projects/spring-boot/tree/v1.5.17.RELEASE/spring-boot-samples/)中来教你使用通用例子。
 
-在一个web应用程序中有一些基本特性:  
+在一个web应用程序中有一些基本特性:
+
 * 一个`AuthenticationManager` bean具有内置的存储和一个user（参见`SecurityProperties.User`的配置）。
 * 忽略的path和一个公共的静态资源位置（/css/\*\*, /js/\*\*, /images/\*\*, /webjars/\*\* and \*\*/favicon.ico）。
 * HTTP Basic security for all other endpoints.
@@ -45,4 +48,3 @@ Using default security password: 78fa095d-3f4c-48b1-ad50-e24c31d5cf35
 
 以上所有的特性可以通过使用外部配置属性（`security.*`）进行关闭，打开或者修改。为了覆盖访问规则但不用修改其他的自动配置属性，可以添加一个使用`@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)`注解的`WebSecurityConfigurerAdapter`类型的bean，通过配置满足你的需求。  
 **注意:** 默认的，一个`WebSecurityConfigurerAdapter`可以匹配任意path。但是如果你不想完全覆盖Spring Boot的自动配置的访问规则，那你这个Adapter就必须显式地配置那些你想覆盖的path。
-
