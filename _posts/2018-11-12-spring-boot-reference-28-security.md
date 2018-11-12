@@ -1,6 +1,6 @@
 ---
 title: Spring Boot Reference（节选）- 28. Security
-date:   2018-11-12 18:30:00 +0800
+date: 2018-11-12 18:30:00 +0800
 layout: post
 categories: Spring-Boot
 tags: Spring-Boot
@@ -24,7 +24,7 @@ author: Bobby
 
 默认的`AuthenticationManager`有一个用户（用户名为'user'，密码是随机的，程序启动时可通过控制台INFO级别的log打印出来）。类似于：
 
-```log
+```text
 Using default security password: 78fa095d-3f4c-48b1-ad50-e24c31d5cf35
 ```
 

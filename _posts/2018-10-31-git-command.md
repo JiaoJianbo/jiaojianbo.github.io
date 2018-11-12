@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Git常用命令"
-date:   2018-10-31 22:40:00 +0800
+title: "Git常用命令"
+date: 2018-10-31 22:40:00 +0800
 categories: git
 tags: git
 author: Bobby
@@ -14,13 +14,9 @@ author: Bobby
 
 
 
-**Clone一个仓库**
+使用SSH Clone一个仓库，`git clone git@<domain>.com:<username>/<repository>.git` 或者 `git clone ssh://<username>@<domain>.com/<repository>.git`。 例如：`git clone git@github.com:JiaoJianbo/test.git`
 
-使用SSH，`git clone git@<domain>.com:<username>/<repository>.git` 
-
-或者 `git clone ssh://<username>@<domain>.com/<repository>.git`。例如：`git clone git@github.com:JiaoJianbo/test.git`
-
-使用HTTPS，`git clone https://<domain>.com:<username>/<repository>.git` 例如：`git clone https://github.com/JiaoJianbo/test.git`
+使用HTTPS Clone一个仓库，`git clone https://<domain>.com:<username>/<repository>.git` 例如：`git clone https://github.com/JiaoJianbo/test.git`
 
 将所有改动加入暂存区 `git add .`，执行前一定先使用 `git status` 查看一下。
 
@@ -48,7 +44,7 @@ author: Bobby
 
 拉取远端分支（本地不存在的） `git checkout -b <local-branch-name> origin/<remote-branch-name>`，如果拉取不成功，可以先尝试 `git fetch`
 
-推送一个本地分支（远端不存在的） `git push --set-upstream origin <branch-name>` 
+推送一个本地分支（远端不存在的） `git push --set-upstream origin <branch-name>`
 
 建立本地分支与远端分支的链接 `git branch --set-upstream-to=origin/<remote-branch-name> <local-branch-name>`
 
