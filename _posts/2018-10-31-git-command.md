@@ -18,6 +18,10 @@ author: Bobby
 
 使用HTTPS Clone一个仓库，`git clone https://<domain>.com:<username>/<repository>.git` 例如：`git clone https://github.com/JiaoJianbo/test.git`
 
+Clone 指定branch，使用`-b`参数，`git clone -b <branch name> <git URL>`
+
+Clone 指定tag，使用`--branch`参数，`git clone --branch <tag name> <git URL>`
+
 将所有改动加入暂存区 `git add .`，执行前一定先使用 `git status` 查看一下。
 
 **从暂存区恢复到工作区** `git reset HEAD <filename>`，对文件做的最新的所有改动都还在（包括已加入到暂存区的和加入暂存区后在工作区新做的修改）。
