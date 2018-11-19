@@ -48,3 +48,49 @@ Using default security password: 78fa095d-3f4c-48b1-ad50-e24c31d5cf35
 
 以上所有的特性可以通过使用外部配置属性（`security.*`）进行关闭，打开或者修改。为了覆盖访问规则但不用修改其他的自动配置属性，可以添加一个使用`@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)`注解的`WebSecurityConfigurerAdapter`类型的bean，通过配置满足你的需求。  
 **注意:** 默认的，一个`WebSecurityConfigurerAdapter`可以匹配任意path。但是如果你不想完全覆盖Spring Boot的自动配置的访问规则，那你这个Adapter就必须显式地配置那些你想覆盖的path。
+
+### 28.1 OAuth2
+
+如果spring-security-oauth2在你的项目的classspath下，那么你就可以使用一些自动配置来轻松搭建授权和资源服务器。详情请查看[Spring Security OAuth 2 Developer Guide](http://projects.spring.io/spring-security-oauth/docs/oauth2.html)。*（注：要明白什么是Authorization Server和 Resource Server，需要先对OAuth 2.0有个了解，官网: [https://oauth.net/2/](https://oauth.net/2/)）*
+
+#### Authorization Server
+
+要创建一个Authorization Server并且授予访问的token，需要使用`@EnableAuthorizationServer`注解，并且提供`security.oauth2.client.client-id`和`security.oauth2.client.client-secret`配置。那么在内存中会为你注册一个客户端。  
+完了之后，您就可以使用客户端凭证来创建访问令牌，例如：
+
+```
+$ curl client:secret@localhost:8080/oauth/token -d grant_type=password -d username=user -d password=pwd
+```
+
+`/token` 终端（endpoint）的基本的授权凭证是`client-id` 和`c`lient-secret`。User的认证信息是基本的Spring Security user details（Spring Boot中默认的是“user”和一个随机密码）。
+
+要关闭自动配置并自己配置Authorization Server的这些特性，只需添加一个`AuthorizationServerConfigurer`类型的`@Bean`。
+
+#### Resource Server
+
+要使用这个访问的token就需要一个Resource Server（它可以和Authorization Server是同一个）。创建一个Resource Server还是比较简单的，只需加入`@EnableResourceServer`注解，并且提供一些配置让server来解码access token。如果你的app也正好是个Authorization Server，那么它都已经知道如何解码了，那就不需要再做什么了。如果你的app是一个独立的服务，那么你需要一些其他的配置，以下选项之一:
+
+* `security.oauth2.resource.user-info-uri` 来使用/me 资源(e.g. https://uaa.run.pivotal.io/userinfo on Pivotal Web Services (PWS)).  
+* `security.oauth2.resource.token-info-uri` 来使用 token 解码 endpoint (e.g.https://uaa.run.pivotal.io/check_token on PWS).
+
+如果你既定义了`user-info-uri`又定义了`token-info-uri`，那么你要设置一个标志，表明那个是首要使用（默认的是`prefer-token-info=true`）。
+
+或者（既不是`user-info-uri`也不是`token-info-uri`）如果token是JWT的 *（注：JSON Web Token，官网：[https://jwt.io/](https://jwt.io/)）*，那么你可以配置`security.oauth2.resource.jwt.key-value`在本地解码（这里的key是验证密钥）。验证密钥值要么是对称密钥，要么是经过PEM编码的RSA公钥。如果您没有密钥，而且它是公共的，那么您可以使用配置`security.oauth2.resource.jwt.key-uri`，提供一个URI，以便去下载它（一个JSON对象包含一个名为“value” 的属性）。例如，在Pivotal Web Services（PWS）中，
+
+```
+$ curl https://uaa.run.pivotal.io/token_key
+{"alg":"SHA256withRSA","value":"-----BEGIN PUBLIC KEY-----\nMIIBI...\n-----END PUBLIC KEY-----\n"}
+```
+另外，如果你的Authorization Server有个endpoint可以返回一组JSON Web Keys(JWKs)，那么你可以配置`security.oauth2.resource.jwk.key-set-uri`属性。例如，在PWS中，
+
+```
+$ curl https://uaa.run.pivotal.io/token_keys
+{"keys":[{"kid":"key-1","alg":"RS256","value":"-----BEGIN PUBLIC KEY-----\nMIIBI...\n-----END PUBLIC
+KEY-----\n"]}
+```
+
+**注意**：同时配置JWT和JWK属性会引起错误的，`security.oauth2.resource.jwt.key-uri`（或者`security.oauth2.resource.jwt.key-value`）和`security.oauth2.resource.jwk.key-set-uri`只能配置其一。
+
+**警告**：如果你使用了`security.oauth2.resource.jwt.key-uri`或者`security.oauth2.resource.jwk.key-set-uri`配置。那么当你启动app的时候Authorization Server必须正在运行。如果不能得到这个key，那么会记录一条warning的log，并告诉你如何修复它。
+
+OAuth2的资源被拥有`security.oauth2.resource.filter-order`的过滤器链保护，这个默认的过滤器链默认的在保护Actuator endpoints的过滤器之后（因此，除非你更改了顺序，要么Actuator endpoints还是使用HTTP Basic的认证方式）。
