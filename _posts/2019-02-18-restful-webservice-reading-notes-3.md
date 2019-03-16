@@ -65,3 +65,80 @@ Atom 列表被称为提要（feed），Atom 列表里的各项被称为条目（
 在美国，一般采用 UTF-8, US-ASCII 或 Windows-1252 等编码。在西欧，一般采用 ISO 8859-1 编码。在 Web 上，HTML 的默认编码为 ISO 8859-1，这种编码跟 Windows-1252 差不多，但略有不同。日文文档一般采用 EUC-JP, Shift_JIS 或 UTF-8 编码。大部分编码都是互不兼容的。人们提出了 Unicode，这是一种表达所有人类文字体系的方法。Unicode 不是一种字符编码，但是 UTF-8 和 UTF-16 都可以用于 Unicode。在处理多语言数据时，最好的做法就是**为所有数据采用同一种编码**。
 
 RFC 4627 指出，JSON 文档里的字符必须是 Unicode 字符，并采用任一种 UTF-* 编码。在实践上，这意味着要么采用 UTF-8，要么采用具有字节顺序标记（Byte-Order Mark, BOM）的 UTF-16。因为有这一约束，所以客户端通过 JSON 文档前面四个字符就能断定其字符编码了（详见 RFC-4267），并不需要 JSON 文档明确指出文档编码。
+
+## 预定义的控制流
+
+## 超媒体技术
+
+超媒体技术分两种：链接和表单。链接反应了当前资源与某个目标资源之间的联系，并用 URI 来标识目标资源。表单分为两种。最简单的称为应用表单（application form），这种表单告诉客户端如何处理应用状态（application state）。应用表单是一种处理那些“名称符合一定模式”的资源的方式，可以把它看成一种有不止一个目标的链接。还有一种表单称之为资源表单（resource form），这种表单告诉客户端如何构造一个表示（representation）来更新资源状态。当然，GET 和 DELETE 请求是无需发送表示的。
+
+链接与应用表单实现了连通性，以及 Roy Fielding 博士论文里提到的“将超媒体作为应用状态的引擎”。
+
+### URI 模板
+
+例如：https://s3.amazonaws.com/{name-of-bucket}/{name-of-object}。URI 模板为我们提供了一种准确无误地给 URI “填空”的方式。
+
+### XHTML4
+
+#### XHTML4 里的链接
+
+有许多 HTML 标签可以用于设置超链接（比如 img），不过主要还是 link 和 a 这两个标签。跟 link 和 a 标签有关的 3 个重要属性是：href, rel 和 rev。
+
+#### XHTML4 里的表单
+
+form 标签。
+
+### XHTML5
+
+### WADL
+
+Web 应用描述语言（Web Application Description Language, WADL）是一种用于“表达HTTP资源的行为”的 XML 词汇（参见 WADL Java 客户端的开发网站 [https://wadl.dev.java.net/](https://wadl.dev.java.net/)）。WADL 是依照 Web 服务描述语言（Web Service Description Language, WSDL）的方式来命名的。
+
+WADL 是一套标准的词汇，它的作用跟 APP 服务文档差不多，不过它能用于任何资源。你可以提供一个描述了你的服务所暴露的每个资源的 WADL 文档。WADL 简化了 Web 服务客户端的编写。
+
+# 第十章 面向资源的架构 vs 大 Web 服务
+
+## 大 Web 服务试图解决哪些问题
+
+大 Web 服务试图解决的主要问题，正是这种面向过程的、需要中介的分布式服务的设计。由于种种原因，这种应用往往在商业与政府应用中比较流行，而在技术和学术领域就不行了。
+
+## SOAP
+
+诸多 WS-* 规范都是在 SOAP 的基础上构建的。经过 SOAP 信封包装后的一个 XML 文档示例：
+
+```xml
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope">
+    <soap:Body>
+        <hello-world xmlns="http://example.com"/>
+    </soap:Body>
+</soap:Envelope>
+```
+
+SOAP 信封必须跟它所包含的文档具有相同的字符编码。关于 SOAP 主体（Body）部分的最后一点说明：你可以用基于 XML Schema Data Types 的数据类型信息来标注参数。例如：`<ie xsi:type="xsd:string">latin1</ie>`。
+
+SOAP 为报头实体定义了两个属性：actor 和 mustUnderstand。假如你事先知道你的消息抵达目标之前将经过若干个媒介，你可以用 actor 来标识（通过 URI）一个报头的目标。mustUnderstand 属性用于对这些媒介（或最终目标）做一些要求。假如某个媒介无法理解发给它的报头，而且该报头的 mustUnderstand 为真的话，那么它必须拒绝此消息——即使它觉得自己能处理该条消息也不行。以一个跟两阶段提交（two-phase commit）操作有关的报头为例，假如目标不能理解两阶段提交，那么该操作就不应继续下去。
+
+SOAP 确实具有一样它所声称的优点，即传输无关性（transport independence）。报头放在消息里，这意味着它们独立于用来传输消息的协议。SOAP 信封不是只能放在 HTTP 信封里发送，你还可以通过 Email、即时消息、原始的 TCP 或任何其它协议来传输 SOAP 消息。公开采用 SMTP 传输的情况不多，有些公司只是在内部采用 JMS 传输，大部分 SOAP 消息还是通过 HTTP 传输的。
+
+## WSDL
+
+## UUID
+
+## 安全性
+
+## 可靠消息传递
+
+## 事务
+
+两阶段提交。补偿事务。
+
+## BPEL, ESB 和 SOA
+
+业务流程执行语言（Business Process Execution Language, BPEL）是一种用以描述牵扯多方的业务流程的 XML 语法。这些流程可以通过软件和 Web 服务进行自动编配（orchestration）。
+
+企业服务总线（Enterprise Service Bus, ESB）有各种各样的定义，不过一般都包括发现、负载均衡、路由、桥接、转换及 Web 服务请求管理等方面。这常常引起运营与开发的分离，使他们各自都得以简化并易于管理。
+
+BPEL 和 ESB 的不足在于，它们都容易增加与公共第三方中间件的耦合度与依赖程度。它们的一个优势，在于你对中间件可以有多种选择。
+
+面向服务的架构（Service-Oriented Architecture, SOA）也许是这几个词中定义最不明确的一个。而且没有办法能够检验一个给定实现是否算作 SOA。SOA 是独立于服务的技术架构的。在面向资源的环境、RPC 服务的环境及异构环境下均能实现 SOA。
+
