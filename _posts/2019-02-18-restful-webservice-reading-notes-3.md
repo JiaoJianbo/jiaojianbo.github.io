@@ -142,3 +142,24 @@ BPEL 和 ESB 的不足在于，它们都容易增加与公共第三方中间件�
 
 面向服务的架构（Service-Oriented Architecture, SOA）也许是这几个词中定义最不明确的一个。而且没有办法能够检验一个给定实现是否算作 SOA。SOA 是独立于服务的技术架构的。在面向资源的环境、RPC 服务的环境及异构环境下均能实现 SOA。
 
+# 第十一章 将 Ajax 应用作为 REST 客户端
+
+Ajax 应用的不利方面在于，每个应用的状态都是同一个 URI —— 即最终用户访问的第一个 URI。这破坏了可寻址性（addressability）和无状态性（statelessness）。虽然幕后的 Web 服务也许是可寻址的和无状态的，但最终用户无法把一个特定状态加入收藏夹，而且浏览器的“后退”按钮也失去了原有的作用。
+
+# 第十二章 REST 式服务框架
+
+## Ruby on Rails
+
+## Restlet
+
+<img src="/assets/images/2019/02/restlet-class-hierarchy.jpg" alt="Restlet Class Hierarchy" />
+
+可参考：[Restlet 开发实例 https://www.cnblogs.com/Scott007/p/3300128.html](https://www.cnblogs.com/Scott007/p/3300128.html)
+
+## Django
+
+# 延伸阅读：
+
+[各种 JAX-RS 实现框架的比较](https://www.ibm.com/developerworks/web/library/wa-apachewink3/)
+
+[比较各JAX-RS实现：CXF,Jersey,RESTEasy,Restlet](http://www.cnblogs.com/felixjia/p/3608718.html)
