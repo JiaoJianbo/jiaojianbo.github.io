@@ -136,4 +136,3 @@ jdbc.url=jdbc:h2:tcp://${jdbc.host}/mem:${jdbc.dbname}
 [Java嵌入式数据库H2学习总结(二)——在Web应用程序中使用H2数据库](https://www.cnblogs.com/xdp-gacl/p/4171278.html)  
 [Java嵌入式数据库H2学习总结(三)——在Web应用中嵌入H2数据库](https://www.cnblogs.com/xdp-gacl/p/4190424.html)  
 [Stack Overflow - H2 SQL Grammar Exception](https://stackoverflow.com/questions/17926093/h2-sql-grammar-exception)
-
