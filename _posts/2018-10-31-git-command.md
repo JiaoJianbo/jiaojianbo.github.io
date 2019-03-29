@@ -63,3 +63,34 @@ Clone 指定tag，使用`--branch`参数，`git clone --branch <tag name> <git U
 `git merge dev` 将dev分支合并到当前分支，或者在dev分支上执行 `git rebase <target-branch>` 也会将dev分支合并到目标分支上，如果有冲突，解决完冲突，再执行 `git rebase --continue`。**注意：两个merge和rebase执行的时候，所在当前分支的区别。还有，一定不要对一个公共的分支做rebase操作** rebase操作可以把本地未push的分叉提交历史整理成直线。
 
 舍弃rebase `git rebase --abort`
+
+2019-03-29 更新
+---
+
+前面上传项目时，将 eclipse 自动生成的 `.project` 和 `.classpath` 也都上传了。现在由 eclipse 换成 STS，结果这两种文件都发生了改变。
+![git status](/assets/images/2019/03/2019-03-29_git-status.jpg)
+
+想忽略这两种文件的改动，于是乎将 `.project` 和 `.classpath` 加入 `.gitignore` 文件，结果并没有起作用。又想到莫非是这些文件在子目录下，于是改为 `**/.project` 和 `**/.classpath`，但是仍然没有起作用。
+
+最后，终于找到了一个解决办法。使用 `git rm --cached [filepath]` 命令。
+![git rm cached](/assets/images/2019/03/2019-03-29_git-rm-cached.jpg)
+
+同样，也删除 .classpath 之后，最终显示修改的文件就是我想要提交的了。
+![git rm cached](/assets/images/2019/03/2019-03-29_git-status-final.jpg)
+
+**参考**：  
+[git rm与git rm --cached](https://www.cnblogs.com/toward-the-sun/p/6599656.html)  
+[Git忽略提交规则 - .gitignore配置运维总结](https://www.cnblogs.com/kevingrace/p/5690241.html)
+
+
+Git tag 操作
+---
+
+列出已有的 tag：`git tag`  
+打一个 tag（默认打在最后一次 commit 上）：`git tag -a [tagName] -m "my comments"`  
+给指定的某个 commit 号加tag：`git tag -a [tagName] 9fceb02 -m "my comments"`  
+查看指定 tag 的详细信息：`git show [tagName]`  
+推送单个本地 tag：`git push origin [tagName]`  
+推送本地所有 tag：`git push origin --tags`  
+删除本地 tag：`git tag -d [tagName]`  
+删除远端 tag：`git tag push origin :refs/tags/[tagName]`  
