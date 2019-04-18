@@ -103,7 +103,7 @@ jdbc.url=jdbc:h2:mem:jeef
 jdbc.url=jdbc:h2:tcp://${jdbc.host}/mem:${jdbc.dbname}
 ```
 
-所以，如果我使用内存模式，就应该选择这种`jdbc.url=jdbc:h2:tcp://${jdbc.host}/mem:${jdbc.dbname}` URL 连接方式（官网上这种方式也叫 Server mode 下的远程连接方式，即 Server mode (remote connections) using TCP/IP）。我们再看一下：
+所以，如果我使用内存模式，就应该选择这种`jdbc.url=jdbc:h2:tcp://${jdbc.host}/mem:${jdbc.dbname}` URL 连接方式（官网上这种方式也叫 Server mode 下的远程连接方式，即 Server mode (remote connections) using TCP/IP）**注：这种方式要求 H2 要早于服务先启动，通常的做法详见下面的参考资料**。我们再看一下：
 
 ![H2 Console remote login](/assets/images/2019/03/h2-console-remote-check-login.jpg)
 
