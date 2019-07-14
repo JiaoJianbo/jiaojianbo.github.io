@@ -50,6 +50,8 @@ Clone 指定tag，使用`--branch`参数，`git clone --branch <tag name> <git U
 
 拉取远端分支（本地不存在的） `git checkout -b <local-branch-name> origin/<remote-branch-name>`，如果拉取不成功，可以先尝试 `git fetch`
 
+推送一个本地分支到远端 `git push origin <branch-name>`
+
 推送一个本地分支（远端不存在的） `git push --set-upstream origin <branch-name>`
 
 建立本地分支与远端分支的链接 `git branch --set-upstream-to=origin/<remote-branch-name> <local-branch-name>`
@@ -60,7 +62,7 @@ Clone 指定tag，使用`--branch`参数，`git clone --branch <tag name> <git U
 
 查看远程库的详细信息 `git remote -v`
 
-多人合作时，每次要push时，注意先 pull 再 merge 再push
+多人合作时，每次要 push 时，注意先 pull， 再 merge， 再 push。
 
 `git merge dev` 将dev分支合并到当前分支，或者在dev分支上执行 `git rebase <target-branch>` 也会将dev分支合并到目标分支上，如果有冲突，解决完冲突，再执行 `git rebase --continue`。**注意：两个merge和rebase执行的时候，所在当前分支的区别。还有，一定不要对一个公共的分支做rebase操作** rebase操作可以把本地未push的分叉提交历史整理成直线。
 
