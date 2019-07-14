@@ -18,6 +18,8 @@ author: Bobby
 
 使用HTTPS Clone一个仓库，`git clone https://<domain>.com:<username>/<repository>.git` 例如：`git clone https://github.com/JiaoJianbo/test.git`
 
+使用 HTTPS 除了速度慢以外，还有个最大的麻烦是每次 clone 和 push 都必须输入口令，但是在某些只开放 HTTP(S) 端口的公司内部就无法使用 SSH 协议就只能用 HTTPS 方式。
+
 Clone 指定branch，使用`-b`参数，`git clone -b <branch name> <git URL>`
 
 Clone 指定tag，使用`--branch`参数，`git clone --branch <tag name> <git URL>`
