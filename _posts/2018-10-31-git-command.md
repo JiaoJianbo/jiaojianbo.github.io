@@ -34,7 +34,7 @@ Clone 指定tag，使用`--branch`参数，`git clone --branch <tag name> <git U
 
 查看所有的commit记录 `git log` 或者 `git log --pretty=oneline`，还有 `git log --graph --pretty=oneline --abbrev-commit`
 
-撤销commit的修改（但是没有push） `git reset HEAD^` 或者 `git reset --hard HEAD^`， *注：`HEAD^`是上一个版本，`HEAD^^`是上两个版本， `HEAD~10`是上10个版本*
+撤销commit的修改（但是没有push） `git reset HEAD^` 或者 `git reset --hard HEAD^`， *注：`HEAD^`是上一个版本，`HEAD^^`是上两个版本， `HEAD~10`是上10个版本*。撤销后已修改的内容还在，只是回退到工作区。
 
 回退到某个版本 `git reset --hard <commit id>`， commit id 没必须要写全，一般写前五位就可以了，commit id 可以使用 `git log` 或者 `git reflog` 去查看。
 
@@ -42,7 +42,7 @@ Clone 指定tag，使用`--branch`参数，`git clone --branch <tag name> <git U
 
 查看某个文件由谁在什么时候做了什么改动 `git blame <filename>`
 
-查看工作区中某个文件跟版本库中的差别 `git diff HEAD -- <filename>`
+查看工作区中某个文件跟版本库中的差别 `git diff HEAD -- <filename>`。`git diff` 比较的是**工作区尚未暂存的**文件的改动，即比较的是工作区和暂存区之间的差异。如果之前没有暂存过，那比较的就是工作区跟版本库（最后一次 commit）之间的差异。因此，在执行完 add 操作后再执行 `git diff` 什么也没有。`git diff --cached` 或者 `git diff --staged` 比较的是**暂存区**和版本库中的差别。
 
 创建并切换到新分支 `git checkout -b <branch-name>`, `git branch` 查看分支，`git branch <branch-name>`创建分支， `git checkout <branch-name>`切换分支
 
@@ -61,6 +61,24 @@ Clone 指定tag，使用`--branch`参数，`git clone --branch <tag name> <git U
 查看所有分支的当前状态 `git branch -av`
 
 查看远程库的详细信息 `git remote -v`
+
+多分支工作时注意以下场景：
+
+场景一：
+
+1. 在分支 A 修改，不 commit （可以使用 git add 加入暂存区）。
+2. 此时在分支 A 的基础上，创建分支 B。之前在分支 A 上修改的内容也会带到分支 B。
+3. 在分支 B 上接着修改，但仍然不提交。又切回分支 A。
+4. 此时，在分支 B 做的修改，在分支 A 仍然可以看到。
+
+场景二：
+1. 在分支 A 修改，不 commit （可以使用 git add 加入暂存区）。
+2. 此时在分支 A 的基础上，创建分支 B。之前在分支 A 上修改的内容也会带到分支 B。
+3. 在分支 B 上接着修改，然后 commit。
+4. 切回分支 A。此时分支 A 上的内容是最后一次 commit 的，切换到分支 B 之前做的修改全没了。
+
+结论：  
+工作区和暂存区，没有分支的概念，对所有分支是共享的。只有 commit 后，修改的内容才会进入具体分支版本库，并且清空工作区和暂存区。
 
 多人合作时，每次要 push 时，注意先 pull， 再 merge， 再 push。
 
