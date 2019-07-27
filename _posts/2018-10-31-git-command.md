@@ -38,7 +38,9 @@ Clone 指定tag，使用`--branch`参数，`git clone --branch <tag name> <git U
 
 回退到某个版本 `git reset --hard <commit id>`， commit id 没必须要写全，一般写前五位就可以了，commit id 可以使用 `git log` 或者 `git reflog` 去查看。
 
-删除某个文件 `git rm <filename>` 或者 手动删除，然后再`git add <filename>`
+删除某个文件的 git 记录以及磁盘上文件本身 `git rm <filename>`， 或者分两步，先手动删除磁盘上的文件，然后再`git add <filename>` 将 git 记录删除。但是直到 commit 才算正式生效。
+
+删除 git 跟踪记录，但是想保留磁盘上的文件本身，使用 `git rm --cached`，下面有详细介绍。
 
 查看某个文件由谁在什么时候做了什么改动 `git blame <filename>`
 
@@ -77,14 +79,13 @@ Clone 指定tag，使用`--branch`参数，`git clone --branch <tag name> <git U
 3. 在分支 B 上接着修改，然后 commit。
 4. 切回分支 A。此时分支 A 上的内容是最后一次 commit 的，切换到分支 B 之前做的修改全没了。
 
-结论：  
-工作区和暂存区，没有分支的概念，对所有分支是共享的。只有 commit 后，修改的内容才会进入具体分支版本库，并且清空工作区和暂存区。
+**结论**：工作区和暂存区，没有分支的概念，对所有分支是共享的。只有 commit 后，修改的内容才会进入具体分支版本库，并且清空工作区和暂存区。
 
 多人合作时，每次要 push 时，注意先 pull， 再 merge， 再 push。
 
-`git merge dev` 将dev分支合并到当前分支，或者在dev分支上执行 `git rebase <target-branch>` 也会将dev分支合并到目标分支上，如果有冲突，解决完冲突，再执行 `git rebase --continue`。**注意：两个merge和rebase执行的时候，所在当前分支的区别。还有，一定不要对一个公共的分支做rebase操作** rebase操作可以把本地未push的分叉提交历史整理成直线。
+`git merge dev` 将 dev 分支合并到当前分支，或者在 dev 分支上执行 `git rebase <target-branch>` 也会将 dev 分支合并到目标分支上，如果有冲突，解决完冲突，再执行 `git rebase --continue`。**注意：两个 merge 和 rebase 执行的时候，所在当前分支的区别。还有，一定不要对一个公共的分支做 rebase 操作** rebase 操作可以把本地未 push 的分叉提交历史整理成直线。
 
-舍弃rebase `git rebase --abort`
+舍弃 rebase `git rebase --abort`
 
 2019-03-29 更新
 ---
@@ -116,3 +117,25 @@ Git tag 操作
 推送本地所有 tag：`git push origin --tags`  
 删除本地 tag：`git tag -d [tagName]`  
 删除远端 tag：`git tag push origin :refs/tags/[tagName]`  
+
+Git stash 操作
+---
+
+**应用场景**：  
+1. 当你现在正在分支 A 上开发，但是突然需要修复一个 bug，但是目前分支 A 上的改动你又不想丢弃或者提交（参考上面的场景一、二，如果工作区和暂存区的改动不提交或者丢弃，都会被带到其他分支，并将最终被提交）。那么此时就可以使用 `git stash` 将所有工作区和暂存区的改动存储起来，然后再切换到其他分支去修复 bug。
+
+2. 由于疏忽，本应该在个人自己分支开发的内容，却在公共的 dev 分支上进行了开发，需要重新切回到自己分支上进行开发。可以用 `git stash` 将内容保存至堆栈中，切回到自己分支后，使用 `git stash pop` 或者 `git stash apply` 恢复已修改的内容即可。
+
+将所有未提交的修改（工作区和暂存区）保存至堆栈中：`git stash`，此时工作区和暂存区清空  
+为 git stash 添加一些注释：`git stash save <comments>`  
+查看当前 stash 中的所有内容：`git stash list`  
+将当前 stash 中的内容弹出，并应用到当前分支上: `git stash pop`, 该命令当前最近保存的（先进后出）内容恢复到工作区，并删除保存记录。  
+`git stash apply` 将堆栈中的内容应用到当前目录，不同于 git stash pop，该命令不会将内容从堆栈中删除，也就说该命令能够将堆栈的内容多次应用到工作目录中，适应于多个分支的情况。  
+`git stash drop <stash-name>` 从堆栈中移除某个指定的 stash 记录。  
+`git stash clear` 清除堆栈中的所有内容。  
+`git stash show -p stash@{0} | git apply -R` 取消之前所应用的 stash 的修改  
+`git stash branch` 基于最近的 stash 创建分支。
+
+**参考**：  
+[3 Git 工具 - 储藏（Stashing）](https://git-scm.com/book/zh/v1/Git-%E5%B7%A5%E5%85%B7-%E5%82%A8%E8%97%8F%EF%BC%88Stashing%EF%BC%89)  
+[git stash详解](https://blog.csdn.net/stone_yw/article/details/80795669) 
