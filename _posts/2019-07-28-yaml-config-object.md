@@ -128,4 +128,5 @@ public class MyConfig {
 * Config 类以及用到的实体类（此处指 Employee）要符合 Java Bean 规范，都要包含无参构造函数以及 getter/setter 方法。否则不能注入参数值或对象，甚至还会抛出异常。这里我使用了 lombok 的 `@Data` 注解，会在编译时为类自动生成构造函数以及 getter/setter 方法。
 
 ### 参考资料：
-[SpringBoot中yaml配置对象](https://www.cnblogs.com/zhuxiaojie/p/6062014.html)
+[SpringBoot中yaml配置对象](https://www.cnblogs.com/zhuxiaojie/p/6062014.html)  
+[代码示例](https://github.com/JiaoJianbo/learning/tree/master/springboot-demo1)  
