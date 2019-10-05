@@ -80,4 +80,14 @@ author: Bobby
 
 ![split-display.jpg](/assets/images/2019/07/split-display.jpg)
 
+15. 隐藏 IDEA 系统文件
+
+![hide-file1.jpg](/assets/images/2019/10/hide-file-1.jpg)
+
+![hide-file2.jpg](/assets/images/2019/10/hide-file-2.jpg)
+
+16. 用 * 标记已修改的文件
+
+![mark-modified.jpg](/assets/images/2019/10/mark-modified.jpg)
+
 （未完，待续）
