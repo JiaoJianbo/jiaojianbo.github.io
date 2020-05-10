@@ -157,18 +157,22 @@ public class ServiceItem {
 接下来是 YAML 文件中的配置
 
 ```yml
+service-host:
+  sit: 192.168.1.100
+  uat: 192.168.100.10
+
 service-url:
   env-item-list:
     - env-name: SIT
       service-list:
-        - {name: "S1", method: "GET", url: "http://192.168.1.100:8080/s1/user"}
-        - {name: "S2", method: "GET", url: "http://192.168.1.100:8081/s2/order"}
-        - {name: "S3", method: "GET", url: "http://192.168.1.100:8082/s3/pay"}
+        - {name: "S1", method: "GET", url: "http://${service-host.sit}:8080/s1/user"}
+        - {name: "S2", method: "GET", url: "http://${service-host.sit}:8081/s2/order"}
+        - {name: "S3", method: "GET", url: "http://${service-host.sit}:8082/s3/pay"}
     - env-name: UAT
       service-list:
-        - {name: "S1", method: "GET", url: "http://192.168.100.10:8080/s1/user"}
-        - {name: "S2", method: "GET", url: "http://192.168.100.10:8081/s2/order"}
-        - {name: "S3", method: "GET", url: "http://192.168.100.10:8082/s3/pay"}
+        - {name: "S1", method: "GET", url: "http://${service-host.uat}:8080/s1/user"}
+        - {name: "S2", method: "GET", url: "http://${service-host.uat}:8081/s2/order"}
+        - {name: "S3", method: "GET", url: "http://${service-host.uat}:8082/s3/pay"}
 ```
 
 这里， `env-name` 和 `service-list` 组成一个 `EnvItem` 对象。
