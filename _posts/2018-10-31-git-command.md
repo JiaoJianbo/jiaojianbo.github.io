@@ -34,13 +34,25 @@ Clone 指定tag，使用`--branch`参数，`git clone --branch <tag name> <git U
 
 查看所有的commit记录 `git log` 或者 `git log --pretty=oneline`，还有 `git log --graph --pretty=oneline --abbrev-commit`
 
+![git log](/assets/images/2021/01/git-log.jpg)
+
+如果分屏显示，空格：下一页，B：上一页，Q：退出
+
+![git log pretty oneline](/assets/images/2021/01/git-log-pretty-oneline.jpg)
+
+![git log graph pretty oneline](/assets/images/2021/01/git-log-graph.jpg)
+
+![git log oneline](/assets/images/2021/01/git-log-oneline.jpg)
+
 撤销commit的修改（但是没有push） `git reset HEAD^` 或者 `git reset --hard HEAD^`， *注：`HEAD^`是上一个版本，`HEAD^^`是上两个版本， `HEAD~10`是上10个版本*。撤销后已修改的内容还在，只是回退到工作区。
 
 回退到某个版本 `git reset --hard <commit id>`， commit id 没必须要写全，一般写前五位就可以了，commit id 可以使用 `git log` 或者 `git reflog` 去查看。
 
+![git reflog](/assets/images/2021/01/git-reflog.jpg)
+
 删除某个文件的 git 记录以及磁盘上文件本身 `git rm <filename>`， 或者分两步，先手动删除磁盘上的文件，然后再`git add <filename>` 将 git 记录删除。但是直到 commit 才算正式生效。
 
-删除 git 跟踪记录，但是想保留磁盘上的文件本身，使用 `git rm --cached`，下面有详细介绍。
+删除 **git 跟踪记录**，但是想保留磁盘上的文件本身，使用 `git rm --cached <filename>`，下面有详细介绍。
 
 查看某个文件由谁在什么时候做了什么改动 `git blame <filename>`
 
@@ -95,7 +107,7 @@ Clone 指定tag，使用`--branch`参数，`git clone --branch <tag name> <git U
 
 想忽略这两种文件的改动，于是乎将 `.project` 和 `.classpath` 加入 `.gitignore` 文件，结果并没有起作用。又想到莫非是这些文件在子目录下，于是改为 `**/.project` 和 `**/.classpath`，但是仍然没有起作用。
 
-最后，终于找到了一个解决办法。使用 `git rm --cached [filepath]` 命令。
+最后，终于找到了一个解决办法。使用 `git rm --cached [filepath]` 命令，删除 git 的跟踪记录，文件仍然保留再工作区。
 ![git rm cached](/assets/images/2019/03/2019-03-29_git-rm-cached.jpg)
 
 同样，也删除 .classpath 之后，最终显示修改的文件就是我想要提交的了。
