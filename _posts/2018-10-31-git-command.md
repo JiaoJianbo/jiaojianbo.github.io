@@ -58,11 +58,15 @@ Clone 指定tag，使用`--branch`参数，`git clone --branch <tag name> <git U
 
 查看工作区中某个文件跟版本库中的差别 `git diff HEAD -- <filename>`。`git diff` 比较的是**工作区尚未暂存的**文件的改动，即比较的是工作区和暂存区之间的差异。如果之前没有暂存过，那比较的就是工作区跟版本库（最后一次 commit）之间的差异。因此，在执行完 add 操作后再执行 `git diff` 什么也没有。`git diff --cached` 或者 `git diff --staged` 比较的是**暂存区**和版本库中的差别。
 
-创建并切换到新分支 `git checkout -b <branch-name>`, `git branch` 查看分支，`git branch <branch-name>`创建分支， `git checkout <branch-name>`切换分支
+创建并切换到新分支 `git checkout -b <branch-name>`, `git branch` 查看分支，`git branch <branch-name>`创建分支， `git checkout <branch-name>`切换分支。
 
 删除分支 `git branch -d <branch-name>`
 
-拉取远端分支（本地不存在的） `git checkout -b <local-branch-name> origin/<remote-branch-name>`，如果拉取不成功，可以先尝试 `git fetch`
+`git pull` 实际上是 `fetch` 和 `merge` 的合并操作。
+
+拉取远端分支（本地不存在的） `git checkout -b <local-branch-name> origin/<remote-branch-name>`，如果拉取不成功，可以先尝试 `git fetch`。`git fetch` 只是把远程内容下载到本地，并不会合并到本地，即不会改变工作区的内容。如果想查看下载下来的内容可以使用 `git checkout origin/<branch-name>`。
+
+![git checkout origin](/assets/images/2021/01/git-checkout-origin.jpg)
 
 推送一个本地分支到远端 `git push origin <branch-name>`
 
@@ -73,6 +77,8 @@ Clone 指定tag，使用`--branch`参数，`git clone --branch <tag name> <git U
 查看所有本地分支和远程分支的对应关系 `git branch -vv`
 
 查看所有分支的当前状态 `git branch -av`
+
+在本地创建远程地址库的别名 `git remote add origin <remote-repository>`, 例如：`git remote add origin https://github.com/JiaoJianbo/jiaojianbo.github.io.git`
 
 查看远程库的详细信息 `git remote -v`
 
