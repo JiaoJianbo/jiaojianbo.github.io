@@ -14,10 +14,11 @@ author: Bobby
 
 
 
+
 1. 切换当前 schema，以及查看当前 schema 和 当前登录 User。
 
 ```sql
-alter session set current_schema=<target schema>;
+alter session set current_schema=<target_schema>;
 select user, sys_context('USERENV','CURRENT_SCHEMA') from dual;
 
 --查看当前用户的所有表
