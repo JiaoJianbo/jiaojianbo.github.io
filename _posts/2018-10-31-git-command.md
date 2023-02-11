@@ -119,6 +119,10 @@ Clone 指定tag，使用`--branch`参数，`git clone --branch <tag name> <git U
 同样，也删除 .classpath 之后，最终显示修改的文件就是我想要提交的了。
 ![git rm cached](/assets/images/2019/03/2019-03-29_git-status-final.jpg)
 
+`git rm <fileName>` 删除暂存区或分支上的文件，同时工作区也不需要这个文件。
+
+`git rm --cached <fileName>` 删除暂存区或分支上的文件，但是文件继续在工作区，不被版本控制。后续可以将该文件添加到 .gitignore 文件。
+
 **参考**：  
 [git rm与git rm --cached](https://www.cnblogs.com/toward-the-sun/p/6599656.html)  
 [Git忽略提交规则 - .gitignore配置运维总结](https://www.cnblogs.com/kevingrace/p/5690241.html)
@@ -157,3 +161,73 @@ Git stash 操作
 **参考**：  
 [3 Git 工具 - 储藏（Stashing）](https://git-scm.com/book/zh/v1/Git-%E5%B7%A5%E5%85%B7-%E5%82%A8%E8%97%8F%EF%BC%88Stashing%EF%BC%89)  
 [git stash详解](https://blog.csdn.net/stone_yw/article/details/80795669) 
+
+
+**git 分支重命名**
+1. 重命名远程分支对应的本地分支名
+`git branch -m oldName newName`
+2. 删除远程分支
+`git push -delete origin oldName`
+3. 上传新命名的本地分支
+`git push origin newName`
+4. 修改本地分支和远程分支的关联
+`git branch --set-upstream-to origin/newName`
+
+
+
+**自动为多个repository 创建新分支的 shell 脚本**
+```bash
+#!/bin/bash
+
+BASE_DIR="/home/bobby/gittest/"
+GIT_BASE_PREFIX="git@github.com:JiaoJianbo/"
+GIT_BASE_SUFFFIX=".git"
+ARTIFACT_LIST=(
+dubbo-zookeeper
+jiaojianbo.github.io
+learning
+#testJTopo
+springcloud-tutorial
+)
+
+SOURCE_BRANCH="master"
+TARGET_BRANCH="1.0_release"
+
+for i in $(seq 0 $[${#ARTIFACT_LIST[@]}-1]); do 
+    if [$i -eq ${#ARTIFACT_LIST[@]} ]; then
+        echo "!!! No more artifact !!!"
+        exit 0
+    fi
+
+    e=${ARTIFACT_LIST[$i]}
+    echo ""
+    echo -e "\e[32m\e[1m*************************************\e[0m"
+    echo -e "\e[32m\e[1m**       "$e"       **\e[0m"
+    echo -e "\e[32m\e[1m*************************************\e[0m"
+
+    echo "###1. clone project ###"
+    git clone -b master $GIT_BASE_PREFIX$e$GIT_BASE_SUFFFIX $BASE_DIR$e
+
+    echo "###2. enter project folder ###"
+    cd $BASE_DIR$e
+
+    echo "###3. switch to source branch ###"
+    git checkout $SOURCE_BRANCH && git pull
+
+    echo "###4. create new branch ###"
+    echo "create new branch $TARGET_BRANCH starting..."
+    git checkout -b $TARGET_BRANCH
+
+    echo "###5. replace version in pom.xml ###"
+    sed -i "s/1.0.0-SNAPSHOT/1.0.0-release/g" pom.xml
+
+    echo "###6. commit changes ###"
+    git add pom.xml && git commit -m "create $TARGET_BRANCH branch"
+
+    echo "###7. push to remote ###"
+    #git push --set-upstream origin $TARGET_BRANCH
+
+    sleep 2;
+done
+
+```
