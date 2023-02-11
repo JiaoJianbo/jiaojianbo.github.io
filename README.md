@@ -3,12 +3,14 @@
 在搭建本地环境时，除了安装`Ruby+Devkit`和Jekyll（`gem install jekyll`）以外，还执行了以下插件安装：
 ```
 gem install bundler
-gem install minima
+gem install minima [-v 2.0.0]
 gem install jekyll-sitemap
 gem install jekyll-compose
 gem install github-pages
 ```
-另外，要在本地运行该程序，还需要注意修改`Gemfile`中各个插件的版本，跟你本地安装的保持一致。
+**另外，要在本地运行该程序，还需要注意修改`Gemfile`中各个插件的版本，跟你本地安装的保持一致。**
+
+可以到 [https://rubygems.org/](https://rubygems.org/) 查看每个插件的版本。
 
 ## 致谢（Thanks）
 The theme is based on [HANUMAN Jekyll Theme](https://github.com/samanyougarg/hanuman) jekyll theme. Thank You.
