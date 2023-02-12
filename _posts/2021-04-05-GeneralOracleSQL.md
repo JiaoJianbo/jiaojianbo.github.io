@@ -45,6 +45,8 @@ select * from user_sys_privs;
 
 --查看角色（只能看登录用户所拥有的角色）所包含的权限
 select * from role_sys_privs;
+--查看当前用户所拥有的权限
+select * from session_privs;
 ```
 
 比如我要查询用户 Bobby 所拥有的权限：
@@ -262,17 +264,21 @@ where segment_type='TABLE'
 order by MB desc;
 ```
 
-22. 查看数据库运行的最大连接数
+22. 查看数据库允许的最大连接数
 
 ```sql
 select value from v$parameter where name='processes';
-
---最大连接 
+--或者 
 show parameter processes; 
 
---查看当前连接数
+--查看当前会话连接数
 select count(*) from v$session;
+--查看当前进程连接数
 select count(*) from v$process;
+--查看数据库并非连接数
+select count(*) from v$session where status='ACTIVE';
+--查看当前数据库建立的会话情况
+select sid,serial#,username,program,machine,status from v$session; 
 ```
 
 23. 查看当前有哪些用户正在使用数据
@@ -282,4 +288,72 @@ SELECT osuser, a.username,cpu_time/executions/1000000||'s', sql_fulltext, machin
 from v$session a, v$sqlarea b
 where a.sql_address =b.address order by cpu_time/executions desc;
 ```
+
+24. 查询当前数据库信息
+
+```sql
+select * from v$instance;
+```
+
+25. 查询数据库启动时间和运行时间
+
+```sql
+select to_char(startup_time, 'DD-MON-YYYY HH24:MI:SS') as 启动时间，
+TRUNC(sysdate-(startup_time))||'天'
+||TRUNC(24*((sysdate-startup_time)-TURNC(sysdate-startup_time)))||'小时'
+||MOD(TRUNC(1440*((sysdate-startup_time)-TURNC(sysdate-startup_time))),60)'分'
+||MOD(TRUNC(86400*((sysdate-startup_time)-TURNC(sysdate-startup_time))),60)'秒' as 运行时间
+from v$instance;
+```
+
+26. 时间和时区 
+
+```sql
+--数据库设置的时区信息
+select dbtimezone from dual;
+--修改当前session的时区信息
+alter session set TIME_ZONE='+08:00';
+select sessiontimezone from dual;
+--数据库服务当前的时间，只含时分秒
+select sysdate from dual;
+--客户端当前时间，只含时分秒，不含时区信息
+select current_date from dual;
+--数据库服务当前的时间，包含时区信息
+select systimestamp from dual;
+--客户端当前时间，包含小数秒，不含时区信息
+select localtimestamp from dual;
+--客户端当前时间，包时区信息
+select current_timestamp from dual;
+```
+sysdate 时获取数据库所在操作系统的时间，与数据库或者会话无关，在session 建立时与**服务端**同步。current_date返回数据库会话所设置的本地时间，在session 建立的时候与**客户端**同步，可通过`alter session set time_zone='+08:00'` 的方式修改。
+
+sessiontimezone 与客户端 session 所在操作系统一致，可通过`alter session set time_zone='+08:00'` 的方式修改。dbtimezone 为数据库的时区。
+
+**Reference**: [https://www.cnblogs.com/muhai/p/16623341.html](https://www.cnblogs.com/muhai/p/16623341.html)
+
+27. 查看数据库表名、列名、约束名长度限制
+
+```sql
+--查看数据库表名长度限制
+select * from all_tab_columns where table_name='USER_TABLES' and column_name='TABLE_NAME';
+--查看数据库列名长度限制
+select * from all_tab_columns where table_name='USER_TAB_COLUMNS' and column_name='COLUMN_NAME';
+--查看数据库约束名长度限制
+select * from all_tab_columns where table_name='USER_CONSTRAINTS' and column_name='CONSTRAINT_NAME';
+```
+
+24. 
+
+```sql
+
+
+```
+
+24. 
+
+```sql
+
+
+```
+
 

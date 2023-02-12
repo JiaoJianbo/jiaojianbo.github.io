@@ -225,7 +225,7 @@ for i in $(seq 0 $[${#ARTIFACT_LIST[@]}-1]); do
     git add pom.xml && git commit -m "create $TARGET_BRANCH branch"
 
     echo "###7. push to remote ###"
-    #git push --set-upstream origin $TARGET_BRANCH
+    git push --set-upstream origin $TARGET_BRANCH
 
     sleep 2;
 done
